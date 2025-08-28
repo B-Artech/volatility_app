@@ -9,6 +9,7 @@ from plotly.subplots import make_subplots
 
 # Initialize the Dash app
 app = Dash(external_stylesheets=[dbc.themes.SUPERHERO])
+server = app.server
 
 # --- App Layout ---
 app.layout = html.Div(
