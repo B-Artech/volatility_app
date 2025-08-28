@@ -2,4 +2,5 @@ dash==3.2.0
 pandas
 numpy
 yfinance
+dash_bootstrap_components
 gunicorn
