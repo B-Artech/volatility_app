@@ -75,7 +75,7 @@ app.layout = html.Div(
     ]),
     # Symbol Return Output 
     html.Div(id='cumulative-return-output',
-        style={'textAlign': 'left', 'marginTop': '20px', 'paddingLeft': 'inherit', 'fontSize': '1.2em' , 'color': "#d7f93eff"}),
+        style={'textAlign': 'left', 'marginTop': '20px', 'marginBottom': '40px', 'paddingLeft': 'inherit', 'fontSize': '1.2em' , 'color': "#d7f93eff"}),
     
 
     # Row with two graphs
@@ -124,7 +124,7 @@ app.layout = html.Div(
             ),
             # Standard Deviation Table
             html.H2(children='Daily Realize Volatility Levels',
-                    style={'textAlign': 'center','marginTop': '10px', 'fontSize':'20px', 'color': "#f9ec3eff"}),
+                    style={'textAlign': 'center','marginTop': '30px', 'fontSize':'20px', 'color': "#f9ec3eff"}),
             dash_table.DataTable(
                 id='std-table',
                 columns = [
