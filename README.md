@@ -1,4 +1,4 @@
-# The Stock Daily Return Distribution App
+# Stock Daily Return Distribution App
 > Is a Dash-based web application that visualizes and analyzes the daily return distribution of a user-specified stock.
 The app calculates logarithmic daily returns and high-to-low price ratios, displaying them in two interactive histograms: 
 one for log returns and another for high-to-low ratios.
