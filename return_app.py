@@ -15,7 +15,7 @@ from o_c_util import o_c_return_calc
 
 # Initialize the Dash app
 app = Dash(external_stylesheets=[dbc.themes.SUPERHERO])
-
+server = app.server
 # --- App Layout ---
 app.layout = html.Div(
     style={'fontFamily': 'Arial, sans-serif', 
