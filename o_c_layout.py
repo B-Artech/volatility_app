@@ -7,7 +7,7 @@ def open_close_return_output():
         # Row with two graphs
         html.Div([
             html.Div([
-                html.H2(children='Open to Close Daily Return',
+                html.H2(children='Open to Close Return',
                         style={'textAlign': 'center', 'fontSize':'18px', 'color': "#f9ec3eff"}),
                 dcc.Graph(
                     id='open_close',
