@@ -8,3 +8,4 @@ The app calculates:
 * It provides a statistical summary in tables, showing metrics like mean returns, frequency of positive/negative returns, and standard deviation bounds for volatility.
 * The cumulative return for the selected period is displayed prominently.
 * The app offers a clear and insightful way to explore asset historical performance.
+<img width="1754" height="847" alt="image" src="https://github.com/user-attachments/assets/a7b4611a-1db7-4b78-9a5c-1be4930e6d41" />
