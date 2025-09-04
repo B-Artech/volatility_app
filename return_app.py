@@ -31,7 +31,9 @@ app.layout = html.Div(
         children='Daily Return Distribution and Statistics (Indices-Stocks-FX-Rates-Commodities-Crypto)',
         style={'textAlign': 'center', 
                'fontSize':'20px', 
-               'color': "#e7e8e6ff"}
+               'color': '#e7e8e6ff',
+               'marginBottom': '20px',
+              }
     ),  
 
     html.Div(style={'display': 'flex', 
