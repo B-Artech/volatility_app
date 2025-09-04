@@ -28,7 +28,7 @@ app.layout = html.Div(
         
     # Header
     html.H1(
-        children='Daily Return Distribution and Statistics (Stocks & Crypto)',
+        children='Daily Return Distribution and Statistics (Indices-Stocks-FX-Rates-Commodities-Crypto)',
         style={'textAlign': 'center', 
                'fontSize':'20px', 
                'color': "#e7e8e6ff"}
