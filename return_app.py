@@ -40,7 +40,7 @@ app.layout = html.Div(
                     'alignItems': 'center', 
                     'justifyContent': 'space-between', 
                     'padding': '10px', 
-                    'width':'600px',
+                    'width':'700px',
                     'heigh':'100%', 
                     'backgroundColor': "#20374c", 
                     'borderRadius': '3px', 
