@@ -174,7 +174,6 @@ def update_graph(n_clicks, ticker_symbol, start_date, end_date, interval):
             x=returns * 100,
             marker_color='#007BFF',
             opacity=0.8,
-            xbins=dict(start=-12, end=12, size=0.5),
             name="Daily Log Returns"
         ))
         close_fig.update_layout(
@@ -190,7 +189,6 @@ def update_graph(n_clicks, ticker_symbol, start_date, end_date, interval):
             x=h_l_result['h_l']*100,
             marker_color="#00FF59",
             opacity=0.8,
-            xbins=dict(start=0, end=20, size=1),
             name="High Low"
         ))
         h_l_fig.update_layout(
@@ -204,7 +202,6 @@ def update_graph(n_clicks, ticker_symbol, start_date, end_date, interval):
             x=o_c_result['o_c']*100,
             marker_color="#00FF59",
             opacity=0.8,
-            xbins=dict(start=-12, end=12, size=0.5),
             name="Open Close"
         ))
         o_c_fig.update_layout(
