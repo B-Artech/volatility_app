@@ -78,6 +78,23 @@ app.layout = html.Div(
             'cursor': 'pointer',
             'fontSize': '15px'
         }),
+        # Data interval drop down
+        dcc.Dropdown(
+        id="interval-dropdown",
+        options=[
+            {'label':"Daily", "value":'1d'},
+            {'label':"Weekly", "value":'1wk'},
+            {'label':"Monthly", "value":'1mo'}
+        ],
+        value='1d', # Default Set
+        clearable=False,
+        style={
+            'width': '100px',
+            'backgroundColor':"#f7f6c9ff",
+            'color':'black',
+            'borderRadius':'3px',
+            'fontSize':'15px'
+        }),
         
     ]),
     # Symbol Return Output 
@@ -115,12 +132,13 @@ app.layout = html.Div(
     [Input('submit-button', 'n_clicks')],
     [State('stock-ticker-input', 'value'),
      State('date-picker-range', 'start_date'),
-     State('date-picker-range', 'end_date')]
+     State('date-picker-range', 'end_date'),
+    State('interval-dropdown','value')]
 )
 
 
 # --- Main Functions ---
-def update_graph(n_clicks, ticker_symbol, start_date, end_date):
+def update_graph(n_clicks, ticker_symbol, start_date, end_date, interval):
     """
     This function is triggered when the find button is clicked.
     It downloads stock data, calculates returns, and creates a histogram.
@@ -131,7 +149,7 @@ def update_graph(n_clicks, ticker_symbol, start_date, end_date):
 
     try:
         # Download stock data using yfinance
-        data = yf.download(ticker_symbol, start=start_date, end=end_date, interval="1d")
+        data = yf.download(ticker_symbol, start=start_date, end=end_date, interval=interval)
 
         if data.empty:
             return go.Figure(),go.Figure(),go.Figure(), f"No data found for symbol '{ticker_symbol}'. Please check the ticker."
