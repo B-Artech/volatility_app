@@ -106,7 +106,18 @@ app.layout = html.Div(
     high_low_return_output(),
     open_close_return_output(),
     
-    ], style={'display':'flex', 'justifyContent':'space-evenly', 'flexWrap':'wrap'})
+    ], style={'display':'flex', 'justifyContent':'space-evenly', 'flexWrap':'wrap'}),
+
+    dbc.Container([
+        dbc.Row(
+            [
+                dbc.Col(html.A(["B-Artech", html.Sup("®"), " | GitHub"], href='https://github.com/B-Artech/volatility_app/tree/main?tab=readme-ov-file#stock-daily-return-distribution-app',
+                                                className="text-secondary p-1 fw-bold text-decoration-none"))
+            ], style={
+                        'width': '100%', 'marginTop': '20px', 'textAlign':'center'
+            }
+            )
+    ])
 
 ])
 
