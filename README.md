@@ -2,14 +2,11 @@
 > It's a Dash-based web application that visualizes and analyzes the return distribution of a any asste that is available on Yahoo Finance.
 
 The app calculates:
+
 Daily, Weekly and Monthly Returns Distributions,
-
 I have used Log return for Close Return, this is more standardised way of calculation used in broad way in case we experience more volatile assets.
-
 High-to-low and Open-to-Close uses Simple Return calculation.
-
 Displaying them in three adjustable interactive histograms,
-
 bins for histograms are set to auto mode but we can adjust them manually.
 
 * It provides a statistical summary in tables,
