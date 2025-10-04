@@ -7,7 +7,6 @@ The app calculates:
 > High-to-low and Open-to-Close uses Simple Return calculation.
 > Displaying them in three adjustable interactive histograms,
   bins for histograms are set to auto mode but we can adjust them manually.
-> 
 
 * It provides a statistical summary in tables,
   showing metrics like mean returns, frequency of positive/negative returns,
