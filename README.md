@@ -1,4 +1,6 @@
 # Stock Daily Return Distribution App
+[![Open App](https://img.shields.io/badge/App-Live-brightgreen)](https://volatility-app-5fqk.onrender.com/)
+
 > It's a Dash-based web application that visualizes and analyzes the return distribution of a any asste that is available on Yahoo Finance.
 
 The app calculates:
