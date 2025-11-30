@@ -17,4 +17,5 @@ bins for histograms are set to auto mode but we can adjust them manually.
 * The cumulative return for the selected period is displayed prominently.
 * The app offers a clear and insightful way to explore asset historical performance.
 # Feel free to contact me if you would like to contribute to this project :)
-<img width="1754" height="847" alt="image" src="https://github.com/user-attachments/assets/a7b4611a-1db7-4b78-9a5c-1be4930e6d41" />
+<img width="1758" height="950" alt="image" src="https://github.com/user-attachments/assets/0dc32225-fbcb-44da-a815-0805cb377065" />
+
