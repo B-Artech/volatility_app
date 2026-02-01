@@ -63,7 +63,7 @@ app.layout = html.Div(
         dcc.DatePickerRange(
             id='date-picker-range',
             start_date="2018-01-01",
-            end_date="2025-10-18",
+            end_date="2026-01-31",
             display_format='YYYY-MM-DD',
             style={'fontSize': '10px', 'borderRadius': '3px'}
         ),
