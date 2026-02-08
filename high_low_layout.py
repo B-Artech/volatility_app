@@ -7,7 +7,8 @@ def high_low_return_output():
         # Row with two graphs
         html.Div([
             html.Div([
-                html.H2(children='High to Low Return',
+                html.H2(id='high-low-title',
+                        children='High to Low Return',
                         style={'textAlign': 'center', 'fontSize':'18px', 'color': "#f9ec3eff"}),
                 dcc.Graph(
                     id='high_low',
@@ -59,5 +60,6 @@ def high_low_return_output():
             ], style={'display':'flex', 'flexDirection':'column','alignItems':'center'})
         
     )
+
 
 
