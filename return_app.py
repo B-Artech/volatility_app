@@ -15,112 +15,135 @@ from o_c_util import o_c_return_calc
 
 # Initialize the Dash app
 app = Dash(external_stylesheets=[dbc.themes.SUPERHERO])
-server = app.server
-# --- App Layout ---
+
+
+tab1_content = dbc.Card(
+    
+    dbc.CardBody(
+        [
+            # Header
+            html.H1(
+                children='Daily Return Distribution and Statistics (Stocks & Crypto)',
+                style={'textAlign': 'center',
+                    'fontSize':'20px',
+                    'color': "#e7e8e6ff"}
+            ),
+
+            html.Div(style={'display': 'flex',
+                            'alignItems': 'center',
+                            'justifyContent': 'space-between',
+                            'padding': '10px',
+                            'width':'600px',
+                            'heigh':'100%',
+                            'backgroundColor': "#20374c",
+                            'borderRadius': '3px',
+                            'marginBottom':'10px'},
+                    
+                    children=[
+                # Ticker Symbol Input
+                dcc.Input(
+                    id='stock-ticker-input',
+                    type='text',
+                    value='Ticker',  # Default value
+                    style={'padding': '10px 15px',
+                        'fontSize': '18px',
+                        'border':'none',
+                        'borderRadius': '3px',
+                        'width':'100px'}
+                ),
+
+                # Date Range Picker
+                dcc.DatePickerRange(
+                    id='date-picker-range',
+                    start_date="2018-01-01",
+                    end_date="2025-11-30",
+                    display_format='YYYY-MM-DD',
+                    style={'fontSize': '10px', 'borderRadius': '3px'}
+                ),
+
+                # Submit Button
+                html.Button('FIND', id='submit-button', n_clicks=0, style={
+                    'backgroundColor': "#df6919",
+                    'color': 'white',
+                    'border': 'none',
+                    'padding': '10px 15px',
+                    'borderRadius': '3px',
+                    'cursor': 'pointer',
+                    'fontSize': '15px'
+                }),
+                # Data interval drop down
+                dcc.Dropdown(
+                id="interval-dropdown",
+                options=[
+                    {'label':"Daily", "value":'1d'},
+                    {'label':"Weekly", "value":'1wk'},
+                    {'label':"Monthly", "value":'1mo'}
+                ],
+                value='1d', # Default Set
+                clearable=False,
+                style={
+                    'width': '100px',
+                    'backgroundColor':"#f7f6c9ff",
+                    'color':'black',
+                    'borderRadius':'3px',
+                    'fontSize':'18px'
+                }),
+
+            ]),
+            # Symbol Return Output 
+            html.Div(id='cumulative-return-output',
+                style={'textAlign': 'left', 'marginTop': '20px','marginBottom': '40px', 'paddingLeft': 'inherit', 'fontSize': '1.2em' , 'color': "#d7f93eff"}),
+
+            html.Div([
+            close_return_output(),
+            high_low_return_output(),
+            open_close_return_output(),
+
+            ], style={'display':'flex', 'justifyContent':'space-evenly', 'flexWrap':'wrap','backgroundColor': '#0f2537'}),
+
+            dbc.Container([
+                dbc.Row(
+                    [
+                        dbc.Col(html.A(["B-Artech", html.Sup("®"), " | GitHub"], href='https://github.com/B-Artech',
+                                                        className="text-secondary p-1 fw-bold text-decoration-none"))
+                    ], style={
+                                'width': '100%', 'marginTop': '20px', 'textAlign':'center'
+                    }
+                    )
+            ])
+        ]
+    ),
+    style={'backgroundColor': '#0f2537'},
+    class_name="mt-3"
+)
+
+tab2_content = dbc.Card(
+    
+    dbc.CardBody(
+        [
+            html.P("Coming soon...")
+        ]
+        
+    ),
+    class_name="mt-3"
+)
 app.layout = html.Div(
     style={'fontFamily': 'Arial, sans-serif', 
            'width':'100%',
-           'maxHeigh':'100%', 
-           'margin': 'auto', 
-           'padding': '20px', 
+           'heigh':'100vh',
+           'margin': 'auto',
+           'padding': '20px',
            'backgroundColor': "#0f2537"},
     children=[
         
-    # Header
-    html.H1(
-        children='Return Distribution(Indices-Stocks-FX-Rates-Commodities-Crypto)',
-        style={'textAlign': 'center', 
-               'fontSize':'20px', 
-               'color': '#e7e8e6ff',
-               'marginBottom': '20px',
-              }
-    ),  
-
-    html.Div(style={'display': 'flex', 
-                    'alignItems': 'center', 
-                    'justifyContent': 'space-between', 
-                    'padding': '10px', 
-                    'width':'700px',
-                    'heigh':'100%', 
-                    'backgroundColor': "#20374c", 
-                    'borderRadius': '3px', 
-                    'marginBottom':'10px'}, 
-             
-             children=[
-        # Ticker Symbol Input
-        dcc.Input(
-            id='stock-ticker-input',
-            type='text',
-            value='Ticker',  # Default value
-            style={'padding': '10px 15px', 
-                   'fontSize': '18px', 
-                   'border':'none', 
-                   'borderRadius': '3px',
-                   'width':'150px'}
-        ),
-
-        # Date Range Picker
-        dcc.DatePickerRange(
-            id='date-picker-range',
-            start_date="2018-01-01",
-            end_date="2026-01-31",
-            display_format='YYYY-MM-DD',
-            style={'fontSize': '10px', 'borderRadius': '3px'}
-        ),
-
-        # Submit Button
-        html.Button('FIND', id='submit-button', n_clicks=0, style={
-            'backgroundColor': "#df6919",
-            'color': 'white',
-            'border': 'none',
-            'padding': '10px 15px',
-            'borderRadius': '3px',
-            'cursor': 'pointer',
-            'fontSize': '15px'
-        }),
-        # Data interval drop down
-        dcc.Dropdown(
-        id="interval-dropdown",
-        options=[
-            {'label':"Daily", "value":'1d'},
-            {'label':"Weekly", "value":'1wk'},
-            {'label':"Monthly", "value":'1mo'}
-        ],
-        value='1d', # Default Set
-        clearable=False,
-        style={
-            'width': '100px',
-            'backgroundColor':"#f7f6c9ff",
-            'color':'black',
-            'borderRadius':'3px',
-            'fontSize':'15px'
-        }),
-        
-    ]),
-    # Symbol Return Output 
-    html.Div(id='cumulative-return-output',
-        style={'textAlign': 'left', 'marginTop': '20px','marginBottom': '40px', 'paddingLeft': 'inherit', 'fontSize': '1.2em' , 'color': "#d7f93eff"}),
-    
-    html.Div([
-    close_return_output(),
-    high_low_return_output(),
-    open_close_return_output(),
-    
-    ], style={'display':'flex', 'justifyContent':'space-evenly', 'flexWrap':'wrap'}),
-
-    dbc.Container([
-        dbc.Row(
+        dbc.Tabs(
             [
-                dbc.Col(html.A(["B-Artech", html.Sup("®"), " | GitHub"], href='https://github.com/B-Artech/volatility_app/tree/main?tab=readme-ov-file#stock-daily-return-distribution-app',
-                                                className="text-secondary p-1 fw-bold text-decoration-none"))
-            ], style={
-                        'width': '100%', 'marginTop': '20px', 'textAlign':'center'
-            }
-            )
-    ])
-
-])
-
+                dbc.Tab(tab1_content, label="Return"),
+                dbc.Tab(tab2_content, label="ATR")
+            ]
+        )
+    ]
+)
 
 # --- Callback to connect inputs to outputs ---
 @app.callback(
@@ -144,9 +167,8 @@ app.layout = html.Div(
     [State('stock-ticker-input', 'value'),
      State('date-picker-range', 'start_date'),
      State('date-picker-range', 'end_date'),
-    State('interval-dropdown','value')]
+     State('interval-dropdown','value')]
 )
-
 
 # --- Main Functions ---
 def update_graph(n_clicks, ticker_symbol, start_date, end_date, interval):
@@ -165,13 +187,10 @@ def update_graph(n_clicks, ticker_symbol, start_date, end_date, interval):
         if data.empty:
             return go.Figure(),go.Figure(),go.Figure(), f"No data found for symbol '{ticker_symbol}'. Please check the ticker."
         
-       
         # Close Return Module Import
         returns, close_stats_data, close_stats_columns, close_std_data, close_std_columns = close_return_calc(data)
         h_l_result = h_l_return_calc(data)
         o_c_result = o_c_return_calc(data)
-        
-        
         
         # Calculate Cumulative Return
         first_price = data['Close'].iloc[0].item()
@@ -185,6 +204,7 @@ def update_graph(n_clicks, ticker_symbol, start_date, end_date, interval):
             x=returns * 100,
             marker_color='#007BFF',
             opacity=0.8,
+            # xbins=dict(start=-12, end=12, size=0.5),
             name="Daily Log Returns"
         ))
         close_fig.update_layout(
@@ -200,6 +220,7 @@ def update_graph(n_clicks, ticker_symbol, start_date, end_date, interval):
             x=h_l_result['h_l']*100,
             marker_color="#00FF59",
             opacity=0.8,
+            # xbins=dict(start=0, end=20, size=1),
             name="High Low"
         ))
         h_l_fig.update_layout(
@@ -207,12 +228,14 @@ def update_graph(n_clicks, ticker_symbol, start_date, end_date, interval):
             bargap=0.05,
             margin=dict(l=20, r=20, t=30, b=20)
             )
+        
         # Open to Close fig
         o_c_fig = go.Figure()
         o_c_fig.add_trace(go.Histogram(
             x=o_c_result['o_c']*100,
             marker_color="#00FF59",
             opacity=0.8,
+            # xbins=dict(start=-12, end=12, size=0.5),
             name="Open Close"
         ))
         o_c_fig.update_layout(
@@ -222,7 +245,6 @@ def update_graph(n_clicks, ticker_symbol, start_date, end_date, interval):
             xaxis=dict(dtick=2)
             )
         
-
         return (close_fig, h_l_fig, o_c_fig,
                 close_stats_data, close_stats_columns, close_std_data, close_std_columns,
                 h_l_result['h_l_stats_data'],h_l_result['h_l_stats_columns'], h_l_result['h_l_std_data'],h_l_result['h_l_std_columns'],
@@ -233,7 +255,26 @@ def update_graph(n_clicks, ticker_symbol, start_date, end_date, interval):
         #error handling
         error_message = f"An error occurred: {e}"
         return go.Figure(),go.Figure(), go.Figure(), f"{error_message}: {e}"
+    
+@app.callback(
+    Output("close-title", "children"),
+    Output("high-low-title", "children"),
+    Output("open-close-title", "children"),
+    Input("interval-dropdown", "value")
+)
+def update_close_title(interval):
+    interval_map = {
+        "1d": "Daily",
+        "1wk": "Weekly",
+        "1mo": "Monthly"
+    }
+    lable = interval_map.get(interval, interval)
 
+    return(
+        f"Close Return ({lable})",
+        f"High to Low Return ({lable})",
+        f"Open to Close Return ({lable})"
+           )
 # --- Run application ---
 if __name__ == '__main__':
     app.run(debug=True)
