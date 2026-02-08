@@ -56,7 +56,7 @@ tab1_content = dbc.Card(
                 dcc.DatePickerRange(
                     id='date-picker-range',
                     start_date="2018-01-01",
-                    end_date="2025-11-30",
+                    end_date="2026-02-09",
                     display_format='YYYY-MM-DD',
                     style={'fontSize': '10px', 'borderRadius': '3px'}
                 ),
