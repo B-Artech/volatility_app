@@ -7,7 +7,8 @@ def close_return_output():
         # Row with two graphs
         html.Div([
             html.Div([
-                html.H2(children='Close Return',
+                html.H2(id='close-title',
+                        children='Close Return',
                         style={'textAlign': 'center', 'fontSize':'18px', 'color': "#f9ec3eff"}),
                 dcc.Graph(
                     id='close-histogram',
@@ -15,7 +16,7 @@ def close_return_output():
             )
             ]),
             # Statistics Table Close Return
-            html.H2(children='Return Statistics',
+            html.H2(id='',children='Return Statistics',
                     style={'textAlign': 'center', 'fontSize':'18px', 'color': "#f9ec3eff", 'marginTop':'5px'}),
             dash_table.DataTable(
                 id='close_stats-table',
@@ -57,4 +58,5 @@ def close_return_output():
                 style_header={'backgroundColor': "#0f2537", 'color': "#ff933b", 'fontWeight': 'bold'}
                     )
             ], style={'display':'flex', 'flexDirection':'column','alignItems':'center'})
+
     )
