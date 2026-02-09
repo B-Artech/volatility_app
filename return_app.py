@@ -15,7 +15,7 @@ from o_c_util import o_c_return_calc
 
 # Initialize the Dash app
 app = Dash(external_stylesheets=[dbc.themes.SUPERHERO])
-
+server = app.server
 
 tab1_content = dbc.Card(
     
