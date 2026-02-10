@@ -1,5 +1,5 @@
 # Stock Return Distribution App
-Please alow some time for server to wake up ;)
+Please allow some time for server to wake up ;)
 
 > [![Open App](https://img.shields.io/badge/App-Live-brightgreen)](https://volatility-app-5fqk.onrender.com/) Lint to the app 
 
