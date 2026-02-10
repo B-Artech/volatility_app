@@ -1,9 +1,9 @@
 # Distribution of Returns App
 Please allow some time for server to wake up ;)
 
-> Visit app server: [![Open App](https://img.shields.io/badge/App-Live-brightgreen)](https://volatility-app-5fqk.onrender.com/)
+# Visit app server: [![Open App](https://img.shields.io/badge/App-Live-brightgreen)](https://volatility-app-5fqk.onrender.com/)
 
-> It's a Dash-based web application that visualizes and analyzes the return distribution of a any asste that is available on Yahoo Finance.
+# It's a Dash-based web application that visualizes and analyzes the return distribution of a any asste that is available on Yahoo Finance.
 
 The app calculates:
 
