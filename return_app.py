@@ -23,7 +23,7 @@ tab1_content = dbc.Card(
         [
             # Header
             html.H1(
-                children='Daily Return Distribution and Statistics (Stocks & Crypto)',
+                children='Distribution of Returns Dashboard',
                 style={'textAlign': 'center',
                     'fontSize':'20px',
                     'color': "#e7e8e6ff"}
