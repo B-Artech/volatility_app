@@ -18,6 +18,7 @@ bins for histograms are set to auto mode but we can adjust them manually.
   and standard deviation bounds for diferent level of volatility.
 * The cumulative return for the selected period is displayed prominently.
 * The app offers a clear and insightful way to explore asset historical performance.
-# Feel free to contact me if you would like to contribute to this project :)
-<img width="1758" height="950" alt="image" src="https://github.com/user-attachments/assets/0dc32225-fbcb-44da-a815-0805cb377065" />
+# Feel free to contact me if you would like to contribute to this project
+<img width="1750" height="972" alt="image" src="https://github.com/user-attachments/assets/d936893b-a54d-47e3-978c-275f9976254b" />
+
 
