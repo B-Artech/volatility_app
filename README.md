@@ -1,6 +1,7 @@
 # Stock Return Distribution App
 Please alow some time for server to wake up ;)
-[![Open App](https://img.shields.io/badge/App-Live-brightgreen)](https://volatility-app-5fqk.onrender.com/) Lint to the app 
+
+> [![Open App](https://img.shields.io/badge/App-Live-brightgreen)](https://volatility-app-5fqk.onrender.com/) Lint to the app 
 
 > It's a Dash-based web application that visualizes and analyzes the return distribution of a any asste that is available on Yahoo Finance.
 
