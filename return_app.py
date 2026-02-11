@@ -195,8 +195,11 @@ def update_graph(n_clicks, ticker_symbol, start_date, end_date, interval):
         # Calculate Cumulative Return
         first_price = data['Close'].iloc[0].item()
         last_price = data['Close'].iloc[-1].item()
+        first_date = data.index[0]
+        last_date = data.index[-1]
+        years = (last_date - first_date).days / 365
         cumulative_return = ((last_price / first_price) - 1) * 100
-        cumulative_return_text = f"{ticker_symbol.upper()} Total Return : {cumulative_return:.2f}%"
+        cumulative_return_text = f"{ticker_symbol.upper()} Range Return: {cumulative_return:.2f}% " f"({years:.2f}Yr)"
       
        # Close fig
         close_fig = go.Figure()
