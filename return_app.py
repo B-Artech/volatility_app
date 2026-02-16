@@ -1,9 +1,11 @@
 import yfinance as yf
 import pandas as pd
 import numpy as np
+import io
 from datetime import date, datetime
 import plotly.graph_objects as go
 from dash import Dash, html, dcc, Input, Output, State, dash_table, no_update
+from dash.dependencies import Input, Output, MATCH
 import dash_bootstrap_components as dbc
 from datetime import date, datetime
 from plotly.subplots import make_subplots
@@ -61,8 +63,8 @@ tab1_content = dbc.Card(
                 dcc.Input(
                     id='stock-ticker-input',
                     type='text',
-                    value='Ticker',  # Default value
-                    style={'padding': '10px 15px',
+                    value=' Ticker',  # Default value
+                    style={'padding': '10px 10px',
                         'fontSize': '15px',
                         'border':'none',
                         'borderRadius': '3px',
@@ -77,7 +79,7 @@ tab1_content = dbc.Card(
                             value='(Ticker)',
                             placeholder='Second Ticker',
                             style={
-                                'padding': '10px 15px',
+                                'padding': '10px 10px',
                                 'fontSize': '15px',
                                 'border':'none',
                                 'borderRadius': '3px',
@@ -171,12 +173,13 @@ tab2_content = dbc.Card(
                     'backgroundColor': "#20374c", 
                     'borderRadius': '3px', 
                     'marginBottom':'10px'},children=[
+            
             dcc.Input(
                 id='ticker1',
                 type='text',
                 value='AAPL',
                 placeholder="Ticker 1",
-                style={'padding': '10px 15px',
+                style={'padding': '5px 5px',
                         'fontSize': '15px',
                         'border':'none',
                         'borderRadius': '3px',
@@ -188,7 +191,7 @@ tab2_content = dbc.Card(
                 type='text',
                 value='MSFT',
                 placeholder="Ticker 2",
-                style={'padding': '10px 15px',
+                style={'padding': '5px 5px',
                         'fontSize': '15px',
                         'border':'none',
                         'borderRadius': '3px',
@@ -212,14 +215,14 @@ tab2_content = dbc.Card(
                 ],
                 value='1d',
                 clearable=False,
-                style={'width': '100px',
+                style={'width': '82px',
                     'backgroundColor':"#f7f6c9ff",
                     'color':'black',
                     'borderRadius':'3px',
-                    'fontSize':'18px'}
+                    'fontSize':'15px'}
             ),
 
-            html.Button("Load",
+            html.Button("LOAD",
                         id="corr-button",
                         n_clicks=0,
                         style={ 
@@ -229,7 +232,7 @@ tab2_content = dbc.Card(
                     'padding': '10px 10px',
                     'borderRadius': '3px',
                     'cursor': 'pointer',
-                    'fontSize': '15px'})
+                    'fontSize': '12px'})
         ]),
 
         html.Br(),
@@ -267,17 +270,18 @@ tab2_content = dbc.Card(
                 style={
                     "width": "50%",
                     "margin": "auto"
-                    })
+                    }),
+        dcc.Store(id="correlation-data"),
         ]
         
     ),
-    style={'backgroundColor': '#0f2537'},
+    style={'backgroundColor': '#0f2537','border':'1px'},
     class_name="mt-3"
 )
 
 tab3_content = dbc.Card(
     
-    dbc.CardBody(
+     dbc.CardBody(
         [
             html.P("Coming soon...")
         ]
@@ -322,7 +326,7 @@ tab6_content = dbc.Card(
 app.layout = html.Div(
     style={'fontFamily': 'Arial, sans-serif', 
            'width':'100%',
-           'heigh':'100vh',
+           'height':'100vh',
            'margin': 'auto',
            'padding': '20px',
            'backgroundColor': "#0f2537"},
@@ -341,12 +345,11 @@ app.layout = html.Div(
     ]
 )
 
-
 # --- Toggle Callback ---
-@app.callback(
-    Output('second-ticker-container', 'style'),
-    Input('calculation-mode', 'value')
-)
+@app.callback( 
+Output('second-ticker-container', 'style'),
+Input('calculation-mode', 'value'))
+
 # --- Toggle Function ---
 def toggle_second_ticker(mode):
     if mode == 'Spread':
@@ -355,6 +358,7 @@ def toggle_second_ticker(mode):
             'marginLeft': '10px'
         }
     return {'display': 'none'}
+
 # --- Return Tab Callback ---
 @app.callback(
     [Output('close-histogram', 'figure'),
@@ -536,72 +540,81 @@ def update_graph(n_clicks, ticker_symbol, ticker_symbol_2, mode,
         #error handling
         error_message = f"An error occurred: {e}"
         return go.Figure(),go.Figure(), go.Figure(), f"{error_message}: {e}"
-    
-# --- Correlation Callback ---
+
 @app.callback(
-    Output("correlation-chart", "figure"),
+    Output("correlation-data", "data"),
     Input("corr-button", "n_clicks"),
-    Input("window-slider", "value"),
     State("ticker1", "value"),
     State("ticker2", "value"),
     State("date", "start_date"),
     State("date", "end_date"),
     State("interval", "value"),
+    prevent_initial_call=True
+)
+
+def download_data(n_clicks, ticker1, ticker2, start, end, interval):
+
+    if not n_clicks:
+        return None
+
+    data = yf.download(
+        [ticker1, ticker2],
+        start=start,
+        end=end,
+        interval=interval
+    )["Close"]
+
+    data = data.dropna()
+
+    # Convert to json for storage
+    return data.to_json(date_format="iso")
+
+# --- Correlation Callback ---
+@app.callback(
+    Output("correlation-chart", "figure"),
+    Input("correlation-data", "data"),
+    Input("window-slider", "value"),
+    State("ticker1", "value"),
+    State("ticker2", "value"),
 )
 
 # --- Correl Function ---
-def update_correlation(n_clicks, window, ticker1, ticker2, start, end, interval):
+def update_correlation(stored_data, window, ticker1, ticker2):
 
-    if n_clicks == 0:
+    if not stored_data:
         return go.Figure()
+    
+    data = pd.read_json(io.StringIO(stored_data))
 
-    try:
-        # Download both tickers
-        data = yf.download(
-            [ticker1, ticker2],
-            start=start,
-            end=end,
-            interval=interval
-        )["Close"]
+    # log return
+    returns = np.log(data / data.shift(1)).dropna()
+    rolling_corr = returns[ticker1].rolling(window).corr(returns[ticker2])
+    current_corr = rolling_corr.iloc[-1]
+    
+    # Price Ratio
+    price_ratio = (data[ticker1] / data[ticker2].loc[rolling_corr.index])
+    
+    fig = go.Figure() 
+    
+    fig.add_trace(go.Scatter(
+        x=rolling_corr.index,
+        y=rolling_corr,
+        mode="lines",
+        name=f"{window}-Period Rolling Correlation"
+    ))
 
-        data = data.dropna()
+    fig.add_trace(go.Scatter(
+        x=price_ratio.index,
+        y=price_ratio,
+        mode="lines",
+        name=f"{ticker1}/{ticker2} Price Ratio",
+        yaxis="y2",
+        line=dict(dash="dot")
+    ))
 
-        # Log returns
-        returns = np.log(data / data.shift(1)).dropna()
+    fig.add_hline(y=0, line_dash="dash")
 
-        # Rolling correlation
-        rolling_corr = returns[ticker1].rolling(window).corr(returns[ticker2])
-
-        current_corr = rolling_corr.iloc[-1]
-        
-        # Price Ration
-        price_ratio = (data[ticker1] / data[ticker2]).loc[rolling_corr.index]
-
-        # Build figure
-        fig = go.Figure()
-
-        fig.add_trace(go.Scatter(
-            x=rolling_corr.index,
-            y=rolling_corr,
-            mode="lines",
-            name=f"{window}-Period Rolling Correlation",
-            line=dict(width=2)
-        ))
-        
-        fig.add_trace(go.Scatter(
-            x=price_ratio.index,
-            y=price_ratio,
-            mode="lines",
-            name=f"{ticker1}/{ticker2} Price Ratio",
-            yaxis="y2",
-            line=dict(width=2, dash="dot")
-        ))
-
-
-        fig.add_hline(y=0, line_dash="dash")
-
-       
-        fig.update_layout(
+    fig.update_layout(
             template="plotly_dark",
             title=f"{ticker1.upper()} vs {ticker2.upper()} | Rolling Correlation & Price Ratio",
             yaxis=dict(
@@ -624,17 +637,8 @@ def update_correlation(n_clicks, window, ticker1, ticker2, start, end, interval)
                 )
             ]
         )
-
-        return fig
-
-    except Exception as e:
-        fig = go.Figure()
-        fig.update_layout(
-            template="plotly_dark",
-            title=f"Error: {e}"
-        )
-        return fig
-    
+    return fig
+   
 # --- Interval Callback ---
 @app.callback(
     Output("close-title", "children"),
