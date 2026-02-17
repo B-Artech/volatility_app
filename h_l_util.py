@@ -47,7 +47,7 @@ def h_l_return_calc(data):
         {"Label": "Positive",
             "Mean": f"{daily_pos_mean:.2%}",
             "Count": pos_count,
-            "Frequency %": f"{pos_perc}%",
+            "Frequency %": f"{pos_perc:.2f}%",
             "Adj Return": f"{pos_adj_freq:.2f}%"},
         
         # Negative Label
@@ -88,4 +88,5 @@ def h_l_return_calc(data):
         "h_l_stats_columns": h_l_stats_columns,
         "h_l_std_data": h_l_std_data,
         "h_l_std_columns": h_l_std_columns
+
     }
