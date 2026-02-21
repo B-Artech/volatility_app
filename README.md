@@ -4,12 +4,13 @@ Please allow some time for server to wake up ;)
 # Visit app: (https://volatility-app-5fqk.onrender.com/)
 
 # It's a Dash-based web application that visualizes and analyzes the return distribution of a any asste that is available on Yahoo Finance.
-# The idea behind this application was that I became time consuming to download raw data to excel file and calculate each time.
+# The idea behind this application was that I became time consuming to download raw data to excel file and calculate each time if I just want to check the asset.
 
 The app calculates:
 
 * Daily, Weekly and Monthly Returns Distributions,
-I have used Log return for Close Return, this is more standardised way of calculation used in broad way in case we experience more volatile assets.
+* For Return Distribution's I have used Log return for Close Return,
+* this is more standardised way of calculation used in broad way in case we experience more volatile assets.
 * High-to-low and Open-to-Close uses Simple Return calculation.
 * Displaying them in three adjustable interactive histograms,
 bins for histograms are set to auto mode but we can adjust them manually.
@@ -20,7 +21,8 @@ bins for histograms are set to auto mode but we can adjust them manually.
 * The cumulative return for the selected period is displayed prominently.
 * The app offers a clear and insightful way to explore asset historical performance.
 # Feel free to get in touch if you would like to contribute to this project
-<img width="1714" height="976" alt="image" src="https://github.com/user-attachments/assets/cb90bf09-8634-4c0d-9b65-470bad9a4f67" />
+<img width="1716" height="1067" alt="image" src="https://github.com/user-attachments/assets/395c94ea-f18f-4de7-9515-b345699732a0" />
+
 
 
 
