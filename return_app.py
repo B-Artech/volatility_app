@@ -5,7 +5,6 @@ import io
 from datetime import date, datetime
 import plotly.graph_objects as go
 from dash import Dash, html, dcc, Input, Output, State, dash_table, no_update
-from dash.dependencies import Input, Output, MATCH
 import dash_bootstrap_components as dbc
 from datetime import date, datetime
 from plotly.subplots import make_subplots
@@ -16,8 +15,11 @@ from close_util import close_return_calc
 from h_l_util import h_l_return_calc
 from o_c_util import o_c_return_calc
 
-# Initialize the Dash app
-app = Dash(external_stylesheets=[dbc.themes.SUPERHERO],suppress_callback_exceptions=True)
+# Initialize Dash app
+app = Dash(
+    external_stylesheets=[dbc.themes.SUPERHERO],
+    suppress_callback_exceptions=True
+)
 server = app.server
 
 tab1_content = dbc.Card(
@@ -48,27 +50,18 @@ tab1_content = dbc.Card(
                     style={ 'margin-bottom':'10px'}
                 ),
 
-            html.Div(style={'display': 'flex',
-                            'alignItems': 'center',
-                            'justifyContent': 'space-between',
-                            'padding': '10px',
-                            'width':'650px',
-                            'heigh':'100%',
-                            'backgroundColor': "#20374c",
-                            'borderRadius': '3px',
-                            'margin-bottom':'10px'},
+            html.Div(
+                className="d-flex align-items-center justify-content-evenly flex-wrap w-50 gap-0.5 mb-1 p-1  rounded",
                     
                     children=[
                 # Ticker Symbol Input
                 dcc.Input(
                     id='stock-ticker-input',
                     type='text',
-                    value=' Ticker',  # Default value
-                    style={'padding': '10px 10px',
-                        'fontSize': '15px',
-                        'border':'none',
-                        'borderRadius': '3px',
-                        'width':'80px'}
+                    value='',
+                    placeholder='Ticker',# Default value
+                    className="form-control w-25",  
+                        style={"maxWidth": "90px"},
                 ),
                 html.Div(
                     id='second-ticker-container',
@@ -76,15 +69,10 @@ tab1_content = dbc.Card(
                         dcc.Input(
                             id='stock-ticker-input-2',
                             type='text',
-                            value='(Ticker)',
-                            placeholder='Second Ticker',
-                            style={
-                                'padding': '10px 10px',
-                                'fontSize': '15px',
-                                'border':'none',
-                                'borderRadius': '3px',
-                                'width':'82px'
-                            }
+                            value='',
+                            placeholder='(Ticker)',
+                            className="form-control w-100",  
+                            style={"maxWidth": "90px"},
                         )
                     ],
                     style={'display': 'none'}  # Hidden by default
@@ -92,11 +80,11 @@ tab1_content = dbc.Card(
 
                 # Date Range Picker
                 dcc.DatePickerRange(
-                    id='date-picker-range',
+                    id='date-return',
                     start_date="2018-01-01",
                     end_date=date.today().isoformat(),
                     display_format='YYYY-MM-DD',
-                    style={'border':'none'}
+                   className="bg-transparent w-50"
                 ),
 
                 # Data interval drop down
@@ -109,25 +97,18 @@ tab1_content = dbc.Card(
                 ],
                 value='1d', # Default Set
                 clearable=False,
+                className="w-auto text-black",
                 style={
-                    'width': '82px',
-                    'backgroundColor':"#f7f6c9ff",
-                    'color':'black',
-                    'borderRadius':'3px',
-                    'fontSize':'15px'
-                }),
-                
+                    'minWidth': '100px',}
+                ),
                 
                 # Submit Button
-                html.Button('LOAD', id='submit-button', n_clicks=0, style={
-                    'backgroundColor': "#df6919",
-                    'color': 'white',
-                    'border': 'none',
-                    'padding': '10px 10px',
-                    'borderRadius': '3px',
-                    'cursor': 'pointer',
-                    'fontSize': '12px'
-                }),
+                dbc.Button(
+                    'LOAD',
+                    id='submit-button',
+                    n_clicks=0,
+                    className="me-1 btn btn-primary",
+                    ),
 
             ]),
             # Symbol Return Output 
@@ -138,23 +119,27 @@ tab1_content = dbc.Card(
             close_return_output(),
             high_low_return_output(),
             open_close_return_output(),
-
-            ], style={'display':'flex', 'justifyContent':'space-evenly', 'flexWrap':'wrap','backgroundColor': '#0f2537'}),
+            ],
+            className="d-flex justify-content-evenly flex-wrap p-3 rounded",
+            ),
 
             dbc.Container([
                 dbc.Row(
                     [
-                        dbc.Col(html.A(["B-Artech", html.Sup("®"), " | GitHub"], href='https://github.com/B-Artech',
-                                                        className="text-secondary p-1 fw-bold text-decoration-none"))
-                    ], style={
-                                'width': '100%', 'marginTop': '20px', 'textAlign':'center'
-                    }
+                        dbc.Col(html.A(["B-Artech", html.Sup("®"), " | GitHub"],
+                                       href='https://github.com/B-Artech',
+                                        className="text-secondary p-1 fw-bold text-decoration-none",
+                                        ),
+                                width=12,
+                                className="text-center mt-4"
+                                )
+                    ], 
                     )
             ])
         ]
     ),
-    style={'backgroundColor': "#0f2537",'border':'1px','padding':'-5px'},
-    class_name="mt-3"
+    style={'backgroundColor': "#0f2537",'padding':'5px'},
+    className="mt-3 border-0 bg-transparent"
 )
 
 tab2_content = dbc.Card(
@@ -177,8 +162,8 @@ tab2_content = dbc.Card(
             dcc.Input(
                 id='ticker1',
                 type='text',
-                value='AAPL',
-                placeholder="Ticker 1",
+                value='',
+                placeholder="AAPL",
                 style={'padding': '5px 5px',
                         'fontSize': '15px',
                         'border':'none',
@@ -189,8 +174,8 @@ tab2_content = dbc.Card(
             dcc.Input(
                 id='ticker2',
                 type='text',
-                value='MSFT',
-                placeholder="Ticker 2",
+                value='',
+                placeholder="MSFT",
                 style={'padding': '5px 5px',
                         'fontSize': '15px',
                         'border':'none',
@@ -199,7 +184,7 @@ tab2_content = dbc.Card(
             ),
 
             dcc.DatePickerRange(
-                id='date',
+                id='date-corr',
                 start_date="2022-01-01",
                 end_date=date.today().isoformat(),
                 display_format='YYYY-MM-DD',
@@ -240,7 +225,7 @@ tab2_content = dbc.Card(
                 [
                     html.Label(
                         "Correlation Window",
-                        style={"textAlign": "center", "display": "block", "marginBottom": "10px"}
+                        style={"textAlign": "center", "display": "block", "marginBottom": "5px"}
                     ),
                     dcc.Slider(
                         id="window-slider",
@@ -255,7 +240,7 @@ tab2_content = dbc.Card(
                 ],
                 style={
                     "width": "40%",
-                    "margin": "30px auto"
+                    "margin": "30px auto",
                 }
         ),
        
@@ -272,7 +257,7 @@ tab2_content = dbc.Card(
                     "margin": "auto"
                     }),
         dcc.Store(id="correlation-data"),
-        ]
+    ]
         
     ),
     style={'backgroundColor': '#0f2537','border':'1px'},
@@ -281,14 +266,154 @@ tab2_content = dbc.Card(
 
 tab3_content = dbc.Card(
     
-     dbc.CardBody(
+         dbc.CardBody(
         [
-            html.P("Coming soon...")
+            # Header
+            html.H1(
+                children='Rolling Dashboard',
+                style={'textAlign': 'center',
+                    'fontSize':'18px',
+                    'color': "#e7e8e6ff"}
+            ),
+             dcc.RadioItems(
+                    id='rolling-calc-mode',
+                    options=[
+                        {'label': html.Div(['Single'], style={'color': 'Yellow',
+                                                                'fontSize': 18,
+                                                                'display': 'inline-block',
+                                                                'marginLeft': 8}), 'value': 'Single'},
+                        
+                        {'label': html.Div(['Pair'], style={'color': 'Yellow',
+                                                            'fontSize': 18,
+                                                            'display': 'inline-block',
+                                                            'marginLeft': 8}), 'value': 'Spread'}
+                    ],
+                    value='Single',
+                    style={ 'margin-bottom':'10px'}
+                ),
+
+            html.Div(style={'display': 'flex',
+                            'alignItems': 'center',
+                            'justifyContent': 'space-between',
+                            'padding': '10px',
+                            'width':'650px',
+                            'heigh':'100%',
+                            'backgroundColor': "#20374c",
+                            'borderRadius': '3px',
+                            'margin-bottom':'10px'},
+                    
+                    children=[
+                # Ticker Symbol Input
+                dcc.Input(
+                    id='roll-ticker1',
+                    type='text',
+                    value='', 
+                    placeholder='Ticker',
+                    style={'padding': '10px 10px',
+                        'fontSize': '15px',
+                        'border':'none',
+                        'borderRadius': '3px',
+                        'width':'80px'}
+                ),
+                html.Div(
+                    id='second-ticker-rolling',
+                    children=[
+                        dcc.Input(
+                            id='roll-ticker2',
+                            type='text',
+                            value='',
+                            placeholder='(Ticker)',
+                            style={
+                                'padding': '10px 10px',
+                                'fontSize': '15px',
+                                'border':'none',
+                                'borderRadius': '3px',
+                                'width':'82px'
+                            }
+                        )
+                    ],
+                    style={'display': 'none'}  # Hidden by default
+                ),
+
+                # Date Range Picker
+                dcc.DatePickerRange(
+                    id='date-roll',
+                    start_date="2022-01-01",
+                    end_date=date.today().isoformat(),
+                    display_format='YYYY-MM-DD',
+                    style={'border':'none'}
+                ),
+
+                # Data interval drop down
+                dcc.Dropdown(
+                id="interval-dropdown",
+                options=[
+                    {'label':"Daily", "value":'1d'},
+                    {'label':"Weekly", "value":'1wk'},
+                    {'label':"Monthly", "value":'1mo'}
+                ],
+                value='1d', # Default Set
+                clearable=False,
+                style={
+                    'width': '82px',
+                    'backgroundColor':"#f7f6c9ff",
+                    'color':'black',
+                    'borderRadius':'3px',
+                    'fontSize':'15px'
+                }),
+                
+                
+                # Submit Button
+                html.Button('LOAD', id='roll-button', n_clicks=0, style={
+                    'backgroundColor': "#df6919",
+                    'color': 'white',
+                    'border': 'none',
+                    'padding': '10px 10px',
+                    'borderRadius': '3px',
+                    'cursor': 'pointer',
+                    'fontSize': '12px'}),
+                ]),
+            
+                html.Br(),
+                html.Div(
+                        [
+                            html.Label(
+                                "Rolling Window",
+                                style={"textAlign": "center", "display": "block", "marginBottom": "5px"}
+                            ),
+                            dcc.Slider(
+                                id="roll-slider",
+                                min=1,
+                                max=100,
+                                step=1,
+                                value=30,
+                                marks=None,
+                                tooltip={"always_visible": True},
+                                updatemode="drag",
+                            )
+                        ],
+                style={
+                    "width": "40%",
+                    "margin": "30px auto",
+                }
+                ),
+                html.Br(),
+
+                html.Div(
+                dcc.Graph(
+                    id="rolling-chart",
+                    style={"height": "500px"}
+                    ),
+                    style={
+                        "width": "50%",
+                        "margin": "auto"
+                        }),
+                dcc.Store(id="rolling-data"),
         ]
-        
     ),
-    class_name="mt-3"
-),
+    style={'backgroundColor': "#0f2537",'padding':'5px'},
+    class_name="mt-3 border-0 bg-transparent"
+)
 
 tab4_content = dbc.Card(
     
@@ -345,10 +470,14 @@ app.layout = html.Div(
     ]
 )
 
-# --- Toggle Callback ---
+# --- Toggle Callback Correlation---
 @app.callback( 
 Output('second-ticker-container', 'style'),
 Input('calculation-mode', 'value'))
+# --- Toggle Callback Rolling---
+@app.callback( 
+Output('second-ticker-rolling', 'style'),
+Input('rolling-calc-mode', 'value'))
 
 # --- Toggle Function ---
 def toggle_second_ticker(mode):
@@ -381,8 +510,8 @@ def toggle_second_ticker(mode):
     [State('stock-ticker-input', 'value'),
      State('stock-ticker-input-2', 'value'),  # NEW
      State('calculation-mode', 'value'), # NEW
-     State('date-picker-range', 'start_date'),
-     State('date-picker-range', 'end_date'),
+     State('date-return', 'start_date'),
+     State('date-return', 'end_date'),
      State('interval-dropdown','value')]
 )
 
@@ -541,13 +670,14 @@ def update_graph(n_clicks, ticker_symbol, ticker_symbol_2, mode,
         error_message = f"An error occurred: {e}"
         return go.Figure(),go.Figure(), go.Figure(), f"{error_message}: {e}"
 
+# --- Correlation Tab Callback Data ---
 @app.callback(
     Output("correlation-data", "data"),
     Input("corr-button", "n_clicks"),
     State("ticker1", "value"),
     State("ticker2", "value"),
-    State("date", "start_date"),
-    State("date", "end_date"),
+    State("date-corr", "start_date"),
+    State("date-corr", "end_date"),
     State("interval", "value"),
     prevent_initial_call=True
 )
@@ -638,7 +768,153 @@ def update_correlation(stored_data, window, ticker1, ticker2):
             ]
         )
     return fig
-   
+ 
+# --- Rolling Return Tab Callback Data ---
+@app.callback(
+    Output("rolling-data", "data"),
+    Input("roll-button", "n_clicks"),
+    State("roll-ticker1", "value"),
+    State("roll-ticker2", "value"),
+    State("date-roll", "start_date"),
+    State("date-roll", "end_date"),
+    State("interval-dropdown", "value"),
+    State('rolling-calc-mode', 'value'),
+    prevent_initial_call=True
+)
+
+# --- Rolling Return Tab Data Function ---
+def download_data(n_clicks, ticker1, ticker2, start, end, interval, mode):
+
+    if not n_clicks:
+        return None
+
+    if mode == "Spread":
+        prices = yf.download(
+            [ticker1, ticker2],
+            start=start,
+            end=end,
+            interval=interval
+        )["Close"]
+    
+        prices = prices[[ticker1, ticker2]]
+
+    else:
+        prices = yf.download(
+            ticker1,
+            start=start,
+            end=end,
+            interval=interval
+        )["Close"]
+        
+    return prices.to_json(date_format="iso")
+
+# --- Rolling Return Tab Callback ---
+@app.callback(
+    Output("rolling-chart", "figure"),
+    Input("rolling-data", "data"),
+    Input("roll-slider", "value"),
+    Input("rolling-calc-mode", "value"),
+    State("roll-ticker1", "value"),
+    State("roll-ticker2", "value"),
+)
+
+# --- Rolling Return Tab Main Function ---
+def update_rolling_return(stored_data, window, mode, ticker1, ticker2):
+    
+    if not stored_data:
+        return go.Figure()
+    
+    data = pd.read_json(io.StringIO(stored_data))
+    
+    if mode == "Spread":
+        
+        long_price = data.iloc[:, 0]
+        short_price = data.iloc[:, 1]
+        spread = long_price/ short_price
+        # spread_returns = spread.pct_change()
+        spread_returns = np.log(spread / spread.shift(1))
+        
+        rolling = ((1 + spread_returns).rolling(window).apply(lambda x: x.prod() - 1))
+        trace_name = f"{ticker1} / {ticker2} Rolling Return"
+        mean = rolling.mean()
+        std = rolling.std()
+        pos_std1 = mean + std
+        neg_std1 = mean - std
+        pos_std2 = mean + 2 * std
+        neg_std2 = mean - 2 * std
+        
+    else:
+        
+        ticker1 = data.columns[0]
+        # returns = data[ticker1].pct_change()
+        returns = np.log(data[ticker1] / data[ticker1].shift(1))
+        rolling = ((1 + returns).rolling(window).apply(lambda x: x.prod() - 1))
+        trace_name = f"{ticker1} Rolling Return"
+        mean = rolling.mean()
+        std = rolling.std()
+        pos_std1 = mean + std
+        neg_std1 = mean - std
+        pos_std2 = mean + 2 * std
+        neg_std2 = mean - 2 * std
+        
+    rolling = rolling.dropna()
+    
+    fig = go.Figure()
+    
+    fig.add_trace(go.Scatter(
+        x=rolling.index,
+        y=rolling,
+        name="Rolling Return",
+       
+    ))
+    
+    # Mean line
+    fig.add_trace(go.Scatter(
+        x=rolling.index,
+        y=[mean] * len(rolling),
+        name=f"Mean {mean*100:.2f}%",
+        line=dict(dash="solid")
+    ))
+
+    # +1σ
+    fig.add_trace(go.Scatter(
+        x=rolling.index,
+        y=[pos_std1] * len(rolling),
+        name=f"+1 Std {pos_std1*100:.2f}%",
+        line=dict(dash="dash")
+    ))
+
+    # -1σ
+    fig.add_trace(go.Scatter(
+        x=rolling.index,
+        y=[neg_std1] * len(rolling),
+        name=f"-1 Std {neg_std1*100:.2f}%",
+        line=dict(dash="dash")
+    ))
+
+    # +2σ
+    fig.add_trace(go.Scatter(
+        x=rolling.index,
+        y=[pos_std2] * len(rolling),
+        name=f"+2 Std {pos_std2*100:.2f}%",
+        line=dict(dash="dot")
+    ))
+
+    # -2σ
+    fig.add_trace(go.Scatter(
+        x=rolling.index,
+        y=[neg_std2] * len(rolling),
+        name=f"-2 Std {neg_std2 *100:.2f}%",
+        line=dict(dash="dot")
+    ))
+    
+    fig.update_layout(
+        template="plotly_dark",
+        title=f"{window}-Period {trace_name}",
+    )
+    
+    return fig
+
 # --- Interval Callback ---
 @app.callback(
     Output("close-title", "children"),
@@ -663,4 +939,4 @@ def update_close_title(interval):
            )
 # --- Run application ---
 if __name__ == '__main__':
-    app.run(debug=True)
+     app.run(debug=True)
