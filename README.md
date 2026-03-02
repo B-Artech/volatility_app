@@ -1,6 +1,6 @@
 # Distribution of Returns YFinance Application
 
-***[Visit App](https://duties-representation-prohibited-article.trycloudflare.com/)***
+***[Visit App](https://warcraft-myers-included-mailed.trycloudflare.com/)***
 
 # It's a Dash-based web application that visualizes and analyzes the return distribution of a any asste that is available on Yahoo Finance.
 # The idea behind this application was that I became time consuming to download raw data to excel file and calculate each time if I just want to check the asset.
