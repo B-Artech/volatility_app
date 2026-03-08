@@ -3,7 +3,10 @@
 ***[Visit App](https://volt-widespread-newer-roll.trycloudflare.com/)***
 
 ## It's a Dash-based web application that visualizes and analyzes the return distribution of a any asste that is available on Yahoo Finance.
-### The idea behind this application was that it became time consuming to download raw data to excel file and calculate each time.
+## Please bear in mind that this tool is not intended to generate trade ideas.
+Its purpose is limited to providing a small set of simple statistical observations.
+Fundamental research remains a separate process that accounts for more than 90% time and, 
+the formation of a market view cannot be derived from statistical analysis alone.
 
 The app calculates:
 
