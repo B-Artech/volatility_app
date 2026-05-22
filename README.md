@@ -1,6 +1,6 @@
 # Distribution of Returns YFinance Application
 
-***[Visit App](https://option-ebooks-draw-san.trycloudflare.com/)***
+***[Visit App](https://stainless-antonio-insertion-hits.trycloudflare.com/)***
 
 ## It's a Dash-based web application that visualizes and analyzes the return distribution of a any asste that is available on Yahoo Finance.
 ## Please bear in mind that this tool is not intended to generate alpha.
