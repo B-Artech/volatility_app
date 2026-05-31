@@ -1,27 +1,8 @@
-# Distribution of Returns YFinance Application
+#  This insightful data analytics tool leverages the power of Python to transform freely available public data into structured market intelligence.
 
 ***[Visit App](https://chicken-longer-feedback-documents.trycloudflare.com/)***
 
-## It's a Dash-based web application that visualizes and analyzes the return distribution of a any asste that is available on Yahoo Finance.
-## Please bear in mind that this tool is not intended to generate alpha.
-Its purpose is limited to providing a small set of simple statistical observations.
-Fundamental research remains a separate process that accounts for more than 90% time and, 
-the formation of a market view cannot be derived from statistical analysis alone.
 
-The app calculates:
-
-* Daily, Weekly and Monthly Returns Distributions,
-* For Return Distribution's I have used Log return for Close Return,
-* this is more standardised way of calculation used in broad way in case we experience more volatile assets.
-* High-to-low and Open-to-Close uses Simple Return calculation.
-
-* It provides a statistical summary in tables,
-  showing metrics like mean returns, frequency of positive/negative returns,
-  and standard deviation bounds for diferent level of volatility.
-* The cumulative return for the selected period is displayed prominently.
-* The app offers a clear and insightful way to explore asset historical performance.
-# Feel free to get in touch if you would like to contribute to this project
-<img width="1576" height="1017" alt="image" src="https://github.com/user-attachments/assets/cd1d8190-a9f4-474c-8738-1a6774a5d5f3" />
 
 
 
